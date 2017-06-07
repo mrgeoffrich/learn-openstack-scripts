@@ -1,6 +1,6 @@
 packer_cache/*
 *.box
 iso/*
-virtualbox-images/*
-vmware-fusion-images/*
+virtualbox
+vmware
 .DS_Store
