@@ -1,0 +1,31 @@
+{
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "script": "scripts/deployserver.sh"
+    }
+  ],
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+      "source_path": "./virtualbox/base-ubuntu/base-ubuntu.ovf",
+      "headless": true,
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
+      "vm_name":"deploy-server",
+      "output_directory": "virtualbox-deploy-server"
+    },
+        {
+      "type": "vmware-vmx",
+      "source_path": "./vmware/base-ubuntu/base-ubuntu.vmx",
+      "headless": true,
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
+      "vm_name":"deploy-server",
+      "output_directory": "virtualbox-deploy-server"
+    }
+  ]
+}
