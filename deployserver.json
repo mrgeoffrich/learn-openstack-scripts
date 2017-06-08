@@ -15,7 +15,7 @@
       "ssh_password": "vagrant",
       "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
       "vm_name":"deploy-server",
-      "output_directory": "virtualbox-deploy-server"
+      "output_directory": "virtualbox/deploy-server"
     },
         {
       "type": "vmware-vmx",
@@ -25,7 +25,10 @@
       "ssh_password": "vagrant",
       "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
       "vm_name":"deploy-server",
-      "output_directory": "virtualbox-deploy-server"
+      "output_directory": "vmware/deploy-server",
+      "vmx_data": {
+        "displayname":"Deployment Server"
+      }
     }
   ]
 }
