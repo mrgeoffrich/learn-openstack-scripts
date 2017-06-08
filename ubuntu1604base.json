@@ -8,20 +8,12 @@
       "type": "shell",
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
       "scripts": [
-        "scripts/ansible.sh",
+        "scripts/packages.sh",
         "scripts/setup.sh",
         "scripts/vmware.sh",
-        "scripts/virtualbox.sh"
+        "scripts/virtualbox.sh",
+        "scripts/cleanup.sh"
       ]
-    },
-    {
-      "type": "ansible-local",
-      "playbook_file": "ansible/main.yml"
-    },
-    {
-      "type": "shell",
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
-      "script": "scripts/cleanup.sh"
     }
   ],
   "builders": [
