@@ -1,7 +1,7 @@
 {
   "variables": {
     "cpu": "2",
-    "ram_size": "8048",
+    "ram_size": "2048",
     "hyperv_switch":"Main External",
     "ssh_password": "vagrant",
     "ssh_username": "vagrant",
@@ -21,7 +21,7 @@
         "scripts/setup.sh",
         "scripts/vmware.sh",
         "scripts/virtualbox.sh",
-        "scripts/allinoneserver.sh",
+        "scripts/deployserver.sh",
         "scripts/cleanup.sh"
       ]
     }
@@ -57,14 +57,14 @@
       ],
       "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "output_directory": "hyperv/allinone-server",
+      "output_directory": "hyperv/deploy-server",
       "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
       "ssh_password": "{{ user `ssh_password` }}",
       "ssh_port": 22,
       "ssh_username": "{{ user `ssh_username` }}",
       "ssh_timeout" : "4h",
       "switch_name": "{{user `hyperv_switch`}}",
-      "vm_name": "allinone-server"
+      "vm_name": "deploy-server"
     }
   ]
 }
