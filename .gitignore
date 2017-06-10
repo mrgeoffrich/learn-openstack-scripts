@@ -3,4 +3,6 @@ packer_cache/*
 iso/*
 virtualbox
 vmware
+hyperv
 .DS_Store
+packerlog.txt
