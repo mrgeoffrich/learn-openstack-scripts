@@ -15,7 +15,21 @@
       "ssh_password": "{{ user `ssh_password` }}",
       "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
       "vm_name":"allinone-server",
-      "output_directory": "virtualbox/allinone-server"
+      "output_directory": "virtualbox/allinone-server",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "8024"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "1"
+        ]
+      ]
     },
     {
       "type": "vmware-vmx",
@@ -27,7 +41,10 @@
       "vm_name":"allinone-server",
       "output_directory": "vmware/allinone-server",
       "vmx_data": {
-        "displayname":"All In One Server"
+        "displayname":"All In One Server",
+        "cpuid.coresPerSocket": "1",
+        "memsize": "8024",
+        "numvcpus": "1"
       }
     }
   ],

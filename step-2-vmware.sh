@@ -1,4 +1,7 @@
 #!/bin/bash
 
-# Create deploy image using packer
-packer build --only=vmware-vmx deployserver.json
+# Create all in one image using packer
+packer build --only=vmware-vmx allinoneserver.json
+
+# Start up the new servers!
+/Applications/VMware\ Fusion.app/Contents/Library/vmrun -T fusion start ./vmware/allinone-server/allinone-server.vmx

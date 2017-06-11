@@ -1,4 +1,8 @@
 #!/bin/bash
 
-# Create deploy image using packer
-packer build --only=virtualbox-ovf deployserver.json
+# Create all in one image using packer
+packer build --only=virtualbox-ovf allinoneserver.json
+
+# Start up the new servers!
+VBoxManage import ./virtualbox/allinone-server/allinone-server.ovf
+VBoxManage startvm allinone-server
