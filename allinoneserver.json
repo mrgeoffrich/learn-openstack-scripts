@@ -3,7 +3,10 @@
     {
       "type": "shell",
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
-      "script": "scripts/allinoneserver.sh"
+      "scripts": [
+        "scripts/allinoneserver.sh",
+        "scripts/cleanup.sh"
+      ]
     }
   ],
   "builders": [
