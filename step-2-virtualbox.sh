@@ -9,9 +9,7 @@ VBoxManage import ./virtualbox/allinone-server/allinone-server.ovf
 # List all the available bridge interfaces
 VBoxManage list bridgedifs
 
-echo 'From that list of interfaces, pick which network to attach the VM to. Say it is en0, run the following:'
-echo 'VBoxManage modifyvm "allinone-server" --nictype1 virtio'
-echo 'VBoxManage modifyvm "allinone-server" --nic1 bridged'
-echo 'VBoxManage modifyvm "allinone-server" --bridgeadapter1 en0'
+echo 'From that list of interfaces, pick which network to attach the VM to. Say it is "en0: Wi-Fi (AirPort)", run the following:'
+echo 'VBoxManage modifyvm "allinone-server" --nic1 bridged --bridgeadapter1 '\''en0: Wi-Fi (AirPort)'\'''
 echo 'VBoxManage modifyvm "allinone-server" --nicpromisc1 allow-all'
 echo 'VBoxManage startvm allinone-server'
