@@ -3,7 +3,7 @@
     {
       "type": "shell",
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
-      "script": "scripts/deployserver.sh"
+      "script": "scripts/mutlinode-network.sh"
     }
   ],
   "builders": [
@@ -14,8 +14,8 @@
       "ssh_username": "{{ user `ssh_username` }}",
       "ssh_password": "{{ user `ssh_password` }}",
       "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
-      "vm_name":"deploy-server",
-      "output_directory": "virtualbox/deploy-server"
+      "vm_name":"os-network-server",
+      "output_directory": "virtualbox/os-network-server"
     },
     {
       "type": "vmware-vmx",
@@ -24,10 +24,10 @@
       "ssh_username": "{{ user `ssh_username` }}",
       "ssh_password": "{{ user `ssh_password` }}",
       "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
-      "vm_name":"deploy-server",
-      "output_directory": "vmware/deploy-server",
+      "vm_name":"os-network-server",
+      "output_directory": "vmware/os-network-server",
       "vmx_data": {
-        "displayname":"Deployment Server"
+        "displayname":"OpenStack Network Server"
       }
     }
   ],

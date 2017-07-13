@@ -1,0 +1,38 @@
+{
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "script": "scripts/mutlinode-storage.sh"
+    }
+  ],
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+      "source_path": "./virtualbox/base-ubuntu/base-ubuntu.ovf",
+      "headless": true,
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
+      "vm_name":"os-storage-server",
+      "output_directory": "virtualbox/os-storage-server"
+    },
+    {
+      "type": "vmware-vmx",
+      "source_path": "./vmware/base-ubuntu/base-ubuntu.vmx",
+      "headless": true,
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
+      "vm_name":"os-storage-server",
+      "output_directory": "vmware/os-storage-server",
+      "vmx_data": {
+        "displayname":"OpenStack Storage Server"
+      }
+    }
+  ],
+  "variables": {
+    "ssh_password": "vagrant",
+    "ssh_username": "vagrant"
+  }
+}
