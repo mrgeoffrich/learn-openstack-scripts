@@ -14,8 +14,8 @@
       "ssh_username": "{{ user `ssh_username` }}",
       "ssh_password": "{{ user `ssh_password` }}",
       "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
-      "vm_name":"os-infrastructure-server",
-      "output_directory": "virtualbox/os-infrastructure-server"
+      "vm_name":"os-infrastructure",
+      "output_directory": "virtualbox/os-infrastructure"
     },
     {
       "type": "vmware-vmx",
@@ -24,8 +24,8 @@
       "ssh_username": "{{ user `ssh_username` }}",
       "ssh_password": "{{ user `ssh_password` }}",
       "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
-      "vm_name":"os-infrastructure-server",
-      "output_directory": "vmware/os-infrastructure-server",
+      "vm_name":"os-infrastructure",
+      "output_directory": "vmware/os-infrastructure",
       "vmx_data": {
         "displayname":"OpenStack Infrastructure Server"
       }

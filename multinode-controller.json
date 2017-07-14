@@ -14,8 +14,8 @@
       "ssh_username": "{{ user `ssh_username` }}",
       "ssh_password": "{{ user `ssh_password` }}",
       "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
-      "vm_name":"os-controller-server",
-      "output_directory": "virtualbox/os-controller-server"
+      "vm_name":"os-controller",
+      "output_directory": "virtualbox/os-controller"
     },
     {
       "type": "vmware-vmx",
@@ -24,8 +24,8 @@
       "ssh_username": "{{ user `ssh_username` }}",
       "ssh_password": "{{ user `ssh_password` }}",
       "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
-      "vm_name":"os-controller-server",
-      "output_directory": "vmware/os-controller-server",
+      "vm_name":"os-controller",
+      "output_directory": "vmware/os-controller",
       "vmx_data": {
         "displayname":"OpenStack Controller Server"
       }

@@ -1,7 +1,20 @@
-5 Nodes:
+6 Node OpenStack installation:
 
-Infrastructure
-Controller
-Network
-Compute
-Storage
+Deploy - Performs the openstack deployment using openstack-ansible.
+Infrastructure - MySQL, RabbitMQ, HAProxy, Memcache.
+Controller - All openstack controller software, including keystone, horizon, nova, heat.
+Network - Openstack networking components, has the layer 3 routing and neutron.
+Compute - Openstack compute node, runs the VMs.
+Storage - Runs cinder and swift storage, iSCSI block storage.
+
+Use packer to provision the base machines.
+
+Have a python script generate the network configuration files and the openstack-ansible yaml files
+required for installation. Static IP addresses should be assigned here, to be passed in to the script
+when it's run.
+
+The python script will also validate particular things to make sure the environment is ready
+to have an installation done.
+
+Once the python script is successful, tell the user where to SSH to and what commands to run to begin the
+installation.
