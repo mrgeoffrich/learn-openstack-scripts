@@ -3,6 +3,7 @@ Run `python configure.py` with a series of command line arguments to prepare the
 an openstack-ansible deployment.
 
 Steps:
+
 * Validate command line arguments
 * Validate environment - SSH in to each machine, check hostname, check current IP address.
 * Generate network configuration files from templates using supplied command line arguments.

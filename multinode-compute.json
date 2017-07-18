@@ -3,7 +3,7 @@
     {
       "type": "shell",
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
-      "script": "scripts/mutlinode-compute.sh"
+      "script": "scripts/multinode-compute.sh"
     }
   ],
   "builders": [
