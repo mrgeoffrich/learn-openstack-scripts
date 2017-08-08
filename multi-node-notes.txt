@@ -7,6 +7,18 @@ Network - Openstack networking components, has the layer 3 routing and neutron.
 Compute - Openstack compute node, runs the VMs.
 Storage - Runs cinder and swift storage, iSCSI block storage.
 
+Network                 CIDR                VLAN
+Management Network	    172.29.236.0/22     10
+Tunnel (VXLAN) Network	172.29.240.0/22	    30
+Storage Network         172.29.244.0/22	    20
+
+Host name	        Management IP	Tunnel (VxLAN) IP	Storage IP
+os-infrastructure   172.29.236.11	 	 
+os-compute          172.29.236.12	172.29.240.12	    172.29.244.12
+os-storage          172.29.236.13	172.29.244.13
+os-network          172.29.236.14
+os-controller       172.29.236.15
+
 Use packer to provision the base machines.
 
 Have a python script generate the network configuration files and the openstack-ansible yaml files

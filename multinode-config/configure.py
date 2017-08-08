@@ -6,22 +6,33 @@ on command line arguments. These files are then transferred on to the target mac
 to prepare them for an openstack installation. This should automate a somewhat difficult and error
 prone task.
 """
+import os
 import argparse
 from platform import system as system_name # Returns the system/OS name
 from os import system as system_call       # Execute a shell command
+from string import Template
 import paramiko
 from termcolor import colored, cprint
+
+def generate_network_config(template_filename, output_filename, replacement_dict):
+    """
+    Takes a template network configuration file and replaces the values.
+    """
+    with open(template_filename, "r") as template_file:
+        data = template_file.read()
+        template = Template(data)
+        write_data = template.substitute(replacement_dict)
+        if not os.path.exists('./generated'):
+            os.makedirs('./generated')
+        with open(output_filename, "w+") as output_file:
+            output_file.write(write_data)
 
 def ping(host):
     """
     Returns True if host (str) responds to a ping request.
     Remember that some hosts may not respond to a ping request even if the host name is valid.
     """
-
-    # Ping parameters as function of OS
     parameters = "-n 1" if system_name().lower() == "windows" else "-c 1"
-
-    # Pinging
     return system_call("ping " + parameters + " " + host) == 0
 
 def test_ssh_connection(name, login_username, login_password):
@@ -54,6 +65,8 @@ def main():
         cprint('Compute server contactable via SSH.', 'green')
     else:
         cprint('Compute server not contactable via SSH.', 'red')
+    replacement_dict = dict(primary_eth='eth0', dns1='8.8.8.8', dns2='8.8.4.4')
+    generate_network_config('infra-network.conf', './generated/infra-network.conf', replacement_dict)
 
 if __name__ == '__main__':
     main()
