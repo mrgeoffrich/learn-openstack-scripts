@@ -1,0 +1,12 @@
+{
+    "os_deploy_ip" : "192.168.0.20",
+    "os_compute_ip" : "192.168.0.21",
+    "os_network_ip" : "192.168.0.22",
+    "os_storage_ip" : "192.168.0.23",
+    "os_infrastructure_ip" : "192.168.0.24",
+    "os_controller_ip" : "192.168.0.25",
+    "gateway":"192.168.0.1",
+    "subnet_mask":"255.255.0.0",
+    "dns_1":"192.168.0.2",
+    "dns_2":"192.168.0.4"
+}

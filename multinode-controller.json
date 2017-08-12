@@ -1,10 +1,18 @@
 {
   "provisioners": [
     {
+      "environment_vars": [
+        "STATIC_IP={{user `os_controller_ip`}}",
+        "SUBNET_MASK={{user `subnet_mask`}}",
+        "GATEWAY={{user `gateway`}}",
+        "DNS_1={{user `dns_1`}}",
+        "DNS_2={{user `dns_2`}}"
+      ],
       "type": "shell",
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
       "scripts": [
         "scripts/multinode-controller.sh",
+        "scripts/multinode-common-net.sh",
         "scripts/cleanup.sh"
       ]
     }
@@ -36,6 +44,11 @@
   ],
   "variables": {
     "ssh_password": "vagrant",
-    "ssh_username": "vagrant"
+    "ssh_username": "vagrant",
+    "os_controller_ip":"",
+    "subnet_mask":"",
+    "gateway":"",
+    "dns_1":"",
+    "dns_2":""
   }
 }
