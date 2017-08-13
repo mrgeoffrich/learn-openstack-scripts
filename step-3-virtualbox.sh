@@ -3,12 +3,12 @@
 # Refactor these into loops
 
 # Create all images using packer
-packer build --only=virtualbox-ovf multinode-deploy.json
-packer build --only=virtualbox-ovf multinode-compute.json
-packer build --only=virtualbox-ovf multinode-controller.json
-packer build --only=virtualbox-ovf multinode-infrastructure.json
-packer build --only=virtualbox-ovf multinode-network.json
-packer build --only=virtualbox-ovf multinode-storage.json
+packer build --only=virtualbox-ovf -var-file=multinode-vars.json multinode-deploy.json
+packer build --only=virtualbox-ovf -var-file=multinode-vars.json multinode-compute.json
+packer build --only=virtualbox-ovf -var-file=multinode-vars.json multinode-controller.json
+packer build --only=virtualbox-ovf -var-file=multinode-vars.json multinode-infrastructure.json
+packer build --only=virtualbox-ovf -var-file=multinode-vars.json multinode-network.json
+packer build --only=virtualbox-ovf -var-file=multinode-vars.json multinode-storage.json
 
 # Import VMs
 VBoxManage import ./virtualbox/os-deploy/os-deploy.ovf
