@@ -15,10 +15,11 @@ auto lo
 iface lo inet loopback
 
 # The primary network interface
-auto enp0s3
-iface enp0s3 inet static
+auto eth0
+iface eth0 inet static
 address $STATIC_IP
 netmask $SUBNET_MASK
 gateway $GATEWAY
 dns-nameservers $DNS_1 $DNS_2
+pre-up sleep 2
 EOM

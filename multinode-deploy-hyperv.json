@@ -29,8 +29,9 @@
        "scripts": [
         "scripts/packages.sh",
         "scripts/setup.sh",
+        "scripts/hyperv.sh",
         "scripts/multinode-deploy.sh",
-        "scripts/multinode-common-net.sh",
+        "scripts/multinode-common-net-hyperv.sh",
         "scripts/cleanup.sh"
       ]
     }

@@ -1,13 +1,5 @@
 #!/bin/bash -eux
 
-# Uninstall Ansible and remove PPA.
-#apt -y remove --purge ansible
-#apt-add-repository --remove ppa:ansible/ansible
-
-echo "==> Cleaning up udev rules"
-rm -rf /dev/.udev/
-rm /lib/udev/rules.d/75-persistent-net-generator.rules
-
 echo "==> Cleaning up leftover dhcp leases"
 # Ubuntu 10.04
 if [ -d "/var/lib/dhcp3" ]; then
