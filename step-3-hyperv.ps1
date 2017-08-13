@@ -29,3 +29,11 @@ Import-Packer-VM '.\hyperv\os-controller\Virtual Machines'
 Import-Packer-VM '.\hyperv\os-infrastructure\Virtual Machines'
 Import-Packer-VM '.\hyperv\os-network\Virtual Machines'
 Import-Packer-VM '.\hyperv\os-storage\Virtual Machines'
+
+# Turn on nested virtualisation
+Set-VMProcessor -VMName os-deploy -ExposeVirtualizationExtensions $true
+Set-VMProcessor -VMName os-compute -ExposeVirtualizationExtensions $true
+Set-VMProcessor -VMName os-controller -ExposeVirtualizationExtensions $true
+Set-VMProcessor -VMName os-infrastructure -ExposeVirtualizationExtensions $true
+Set-VMProcessor -VMName os-network -ExposeVirtualizationExtensions $true
+Set-VMProcessor -VMName os-storage -ExposeVirtualizationExtensions $true
