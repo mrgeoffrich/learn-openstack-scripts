@@ -6,22 +6,31 @@
     "ssh_password": "vagrant",
     "ssh_username": "vagrant",
     "iso_checksum":"737ae7041212c628de5751d15c3016058b0e833fdc32e7420209b76ca3d0a535",
-    "iso_checksum_type":"sha256"
+    "iso_checksum_type":"sha256",
+    "os_deploy_ip":"",
+    "subnet_mask":"",
+    "gateway":"",
+    "dns_1":"",
+    "dns_2":""
   },
   "provisioners": [
     {
        "environment_vars": [
         "SSH_USERNAME={{user `ssh_username`}}",
-        "SSH_PASSWORD={{user `ssh_password`}}"
+        "SSH_PASSWORD={{user `ssh_password`}}",
+        "STATIC_IP={{user `os_deploy_ip`}}",
+        "SUBNET_MASK={{user `subnet_mask`}}",
+        "GATEWAY={{user `gateway`}}",
+        "DNS_1={{user `dns_1`}}",
+        "DNS_2={{user `dns_2`}}"
       ],
       "type": "shell",
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
        "scripts": [
         "scripts/packages.sh",
         "scripts/setup.sh",
-        "scripts/vmware.sh",
-        "scripts/virtualbox.sh",
-        "scripts/deployserver.sh",
+        "scripts/multinode-deploy.sh",
+        "scripts/multinode-common-net.sh",
         "scripts/cleanup.sh"
       ]
     }
@@ -57,14 +66,14 @@
       ],
       "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "output_directory": "hyperv/deploy-server",
+      "output_directory": "hyperv/os-deploy",
       "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
       "ssh_password": "{{ user `ssh_password` }}",
       "ssh_port": 22,
       "ssh_username": "{{ user `ssh_username` }}",
       "ssh_timeout" : "4h",
       "switch_name": "{{user `hyperv_switch`}}",
-      "vm_name": "deploy-server"
+      "vm_name": "os-deploy"
     }
   ]
 }

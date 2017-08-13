@@ -19,8 +19,6 @@
        "scripts": [
         "scripts/packages.sh",
         "scripts/setup.sh",
-        "scripts/vmware.sh",
-        "scripts/virtualbox.sh",
         "scripts/allinoneserver.sh",
         "scripts/cleanup.sh"
       ]
