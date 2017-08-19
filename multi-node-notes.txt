@@ -11,13 +11,14 @@ Network                 CIDR                VLAN
 Management Network	    172.29.236.0/22     10
 Tunnel (VXLAN) Network	172.29.240.0/22	    30
 Storage Network         172.29.244.0/22	    20
+Host Network            192.168.0.0/16      -
 
-Host name	        Management IP	Tunnel (VxLAN) IP	Storage IP
-os-infrastructure   172.29.236.11	 	 
-os-compute          172.29.236.12	172.29.240.12	    172.29.244.12
-os-storage          172.29.236.13	172.29.244.13
-os-network          172.29.236.14
-os-controller       172.29.236.15
+Host name	        Management IP	Tunnel (VxLAN) IP	Storage IP      Host Network IP
+os-infrastructure   172.29.236.11	 	                                192.168.0.24
+os-compute          172.29.236.12	172.29.240.12	    172.29.244.12   192.168.0.21
+os-storage          172.29.236.13	                    172.29.244.13   192.168.0.23
+os-network          172.29.236.14                                       192.168.0.22
+os-controller       172.29.236.15                                       192.168.0.25
 
 Use packer to provision the base machines.
 

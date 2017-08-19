@@ -13,8 +13,7 @@ from os import system as system_call       # Execute a shell command
 from string import Template
 import json
 import paramiko
-from termcolor import colored, cprint
-
+from termcolor import cprint
 
 def generate_network_config(template_filename, output_filename, replacement_dict):
     """
@@ -95,13 +94,14 @@ def main():
     args = parser.parse_args()
     json_data = load_json_config(args.config_file)
     # A list of all the servers we expect to be in the config file and ready for deployment
+    # Potentially this can go in a config file somewhere.
     server_list = {'os_deploy_ip' : {'name':'os-deploy', 'filename':'deploy-network.conf'},
                    'os_compute_ip' : {'name':'os-compute', 'filename':'compute-network.conf'},
                    'os_network_ip' : {'name':'os-network', 'filename':'network-network.conf'},
                    'os_storage_ip' : {'name':'os-storage', 'filename':'storage-network.conf'},
                    'os_infrastructure_ip' : {'name':'os-infrastructure',
                                              'filename':'infrastructure-network.conf'},
-                   'os_controller_ip' : {'name':'os-controller', 
+                   'os_controller_ip' : {'name':'os-controller',
                                          'filename':'controller-network.conf'}}
     validate_json(json_data, server_list)
     default_username = 'vagrant'
@@ -109,7 +109,8 @@ def main():
 
     all_servers_ok = True
     for key in server_list:
-        if not check_server(json_data[key], default_username, default_password, server_list[key]['name']):
+        if not check_server(json_data[key], default_username,
+                            default_password, server_list[key]['name']):
             all_servers_ok = False
 
     if not all_servers_ok:
@@ -118,6 +119,7 @@ def main():
     else:
         cprint('All servers are contactable for deployment.', 'green')
 
+    # TODO: Make this configurable via the command line as it change base on hypervisor
     json_data['primary_eth'] = 'eth0'
     for key in server_list:
         generate_network_config(server_list[key]['filename'], './generated/' +
