@@ -28,10 +28,11 @@
         "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
          "scripts": [
           "scripts/packages.sh",
-          "scripts/setup.sh",
+          "scripts/setup-apt-cache.sh",
           "scripts/hyperv.sh",
           "scripts/multinode-compute.sh",
           "scripts/multinode-common-net-hyperv.sh",
+          "scripts/multinode-common.sh",
           "scripts/cleanup.sh"
         ]
       }

@@ -51,6 +51,18 @@ def test_ssh_connection(name, login_username, login_password):
     except:
         return False
 
+def transfer_file(name, login_username, login_password, local_file, remote_file):
+    """
+    Transfers a local file on to a remote host via SFTP
+    """
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.connect(name, username=login_username, password=login_password)
+    sftp = ssh.open_sftp()
+    print('Copying ' + local_file + ' to ' + name + ' at ' + remote_file)
+    sftp.put(local_file, remote_file)
+    sftp.close()
+
 def load_json_config(filename):
     """
     Load configuration settings from a JSON file
@@ -119,11 +131,13 @@ def main():
     else:
         cprint('All servers are contactable for deployment.', 'green')
 
-    # TODO: Make this configurable via the command line as it change base on hypervisor
+    # TODO: Make the primary_eth configurable via the command line as it changes base on hypervisor
     json_data['primary_eth'] = 'eth0'
     for key in server_list:
         generate_network_config(server_list[key]['filename'], './generated/' +
                                 server_list[key]['filename'], json_data)
+    for key in server_list:
+        transfer_file(json_data[key], default_username, default_password, './generated/' + server_list[key]['filename'], '/home/vagrant/interfaces')
 
 if __name__ == '__main__':
     main()

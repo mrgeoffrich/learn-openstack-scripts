@@ -22,7 +22,7 @@
       "type": "shell",
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
       "scripts": [
-        "scripts/setup.sh",
+        "scripts/setup-apt-cache.sh",
         "scripts/packages.sh",
         "scripts/vmware.sh",
         "scripts/virtualbox.sh",

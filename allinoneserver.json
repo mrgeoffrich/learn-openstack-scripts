@@ -4,6 +4,8 @@
       "type": "shell",
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
       "scripts": [
+        "scripts/packages.sh",
+        "scripts/setup-apt-cache.sh",
         "scripts/allinoneserver.sh",
         "scripts/cleanup.sh"
       ]

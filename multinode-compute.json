@@ -13,6 +13,7 @@
       "scripts": [
         "scripts/multinode-compute.sh",
         "scripts/multinode-common-net.sh",
+        "scripts/multinode-common.sh",
         "scripts/cleanup.sh"
       ]
     }
