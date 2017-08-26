@@ -5,13 +5,15 @@
       "hyperv_switch":"Main External",
       "ssh_password": "vagrant",
       "ssh_username": "vagrant",
-      "iso_checksum":"737ae7041212c628de5751d15c3016058b0e833fdc32e7420209b76ca3d0a535",
-      "iso_checksum_type":"sha256",
       "os_deploy_ip":"",
       "subnet_mask":"",
       "gateway":"",
       "dns_1":"",
-      "dns_2":""
+      "dns_2":"",
+      "iso_checksum":"a06cd926f5855d4f21fb4bc9978a35312f815fbda0d0ef7fdc846861f4fc4600",    
+      "iso_checksum_type":"sha256",
+      "iso_url":"http://releases.ubuntu.com/16.04/ubuntu-16.04.3-server-amd64.iso",
+      "iso_filename":"iso/ubuntu-16.04.3-server-amd64.iso"
     },
     "provisioners": [
       {
