@@ -11,8 +11,7 @@ function Import-Packer-VM
     Import-VM $vmcxFilePath  -Copy -GenerateNewId
 }
 
-# $serverNames = @('compute','deploy','infrastructure','storage')
-$serverNames = @('deploy')
+$serverNames = @('compute','deploy','infrastructure','storage')
 $storageServer = 'os-storage'
 $mainSwitchName = 'Main External'
 $multinodeFile = ".\multinode-vars.json"
@@ -42,18 +41,3 @@ if (-not (Test-Path $secondHddPath)) {
     New-VHD -Path $secondHddPath -SizeBytes 100GB -Dynamic
     Add-VMHardDiskDrive -VMName $storageServer -ControllerType SCSI -Path $secondHddPath
 }
-
-
-# I manually added a second hard drive to os-storage
-# Then: sudo fdisk /dev/sdb
-# n for new
-# p for primary partition
-# 1 for first partition
-# enter twice to select default start and end sectors
-# t to change type
-# 8e to select LVM
-# p to confirm setup
-# w to write and exit
-# 
-# pvcreate /dev/sdb1
-# vgcreate cinder-volumes /dev/sdb1
