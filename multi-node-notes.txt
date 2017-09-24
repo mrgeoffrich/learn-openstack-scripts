@@ -14,9 +14,12 @@ Storage Network         172.29.244.0/22	    20
 Host Network            192.168.0.0/16      -
 
 Host name	        Management IP	Tunnel (VxLAN) IP	Storage IP      Host Network IP
+os-deploy           172.29.236.16                                       192.168.0.20   
 os-infrastructure   172.29.236.11	 	                                192.168.0.24
 os-compute          172.29.236.12	172.29.240.12	    172.29.244.12   192.168.0.21
 os-storage          172.29.236.13	                    172.29.244.13   192.168.0.23
+
+Later:
 os-network          172.29.236.14                                       192.168.0.22
 os-controller       172.29.236.15                                       192.168.0.25
 
@@ -31,3 +34,21 @@ to have an installation done.
 
 Once the python script is successful, tell the user where to SSH to and what commands to run to begin the
 installation.
+
+Remaining steps:
+
+Setup SSH keys so ansible can access other servers.
+SSH on to os-deploy, sudo su
+copy all the os-deploy:/root/.ssh/ contents to all other servers
+
+
+Copy the contents of the /opt/openstack-ansible/etc/openstack_deploy directory to the /etc/openstack_deploy directory.
+Upload openstack_user_config.yml to /etc/openstack_deploy
+cd /opt/openstack-ansible/scripts
+python pw-token-gen.py --file /etc/openstack_deploy/user_secrets.yml
+cd /opt/openstack-ansible/playbooks
+openstack-ansible setup-infrastructure.yml --syntax-check # Checks the openstack_user_config.yml is openstack
+openstack-ansible setup-hosts.yml
+openstack-ansible setup-infrastructure.yml
+ansible galera_container -m shell -a "mysql -h localhost -e 'show status like \"%wsrep_cluster_%\";'"
+openstack-ansible setup-openstack.yml

@@ -109,12 +109,9 @@ def main():
     # Potentially this can go in a config file somewhere.
     server_list = {'os_deploy_ip' : {'name':'os-deploy', 'filename':'deploy-network.conf'},
                    'os_compute_ip' : {'name':'os-compute', 'filename':'compute-network.conf'},
-                   'os_network_ip' : {'name':'os-network', 'filename':'network-network.conf'},
                    'os_storage_ip' : {'name':'os-storage', 'filename':'storage-network.conf'},
                    'os_infrastructure_ip' : {'name':'os-infrastructure',
-                                             'filename':'infrastructure-network.conf'},
-                   'os_controller_ip' : {'name':'os-controller',
-                                         'filename':'controller-network.conf'}}
+                                             'filename':'infrastructure-network.conf'}}
     validate_json(json_data, server_list)
     default_username = 'vagrant'
     default_password = 'vagrant'
@@ -131,7 +128,7 @@ def main():
     else:
         cprint('All servers are contactable for deployment.', 'green')
 
-    # TODO: Make the primary_eth configurable via the command line as it changes base on hypervisor
+    # TODO: Make the primary_eth configurable via the command line as it changes based on hypervisor
     json_data['primary_eth'] = 'eth0'
     for key in server_list:
         generate_network_config(server_list[key]['filename'], './generated/' +

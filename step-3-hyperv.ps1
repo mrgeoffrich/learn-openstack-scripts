@@ -11,29 +11,49 @@ function Import-Packer-VM
     Import-VM $vmcxFilePath  -Copy -GenerateNewId
 }
 
+# $serverNames = @('compute','deploy','infrastructure','storage')
+$serverNames = @('deploy')
+$storageServer = 'os-storage'
+$mainSwitchName = 'Main External'
+$multinodeFile = ".\multinode-vars.json"
+$secondHddPath = 'F:\VMs\CinderStoreage.vhdx'
+
 Write-Host "Please ensure you have configured an External switch, and in the packer config you have"
 Write-Host "replaced the hyperv_switch variable value with the name of this switch."
 
-$multinodeFile = "multinode-vars.json"
+for ($i=0; $i -lt $serverNames.Length; $i++) {
+    Write-Host 'Building', $serverNames[$i]
+    $packerBuildFile = '.\multinode-' + $serverNames[$i] + '-hyperv.json'
+    $vmFolder = '.\hyperv\os-' + $serverNames[$i] + '\Virtual Machines'
+    $vmName = 'os-' + $serverNames[$i]
+    packer build --only=hyperv-iso --force -var-file="$multinodeFile" $packerBuildFile
+    Import-Packer-VM $vmFolder
+    Set-VMProcessor -VMName $vmName -ExposeVirtualizationExtensions $true
+    Set-VMNetworkAdapterVlan -VMName $vmName -Trunk -AllowedVlanIdList 0-1000 -NativeVlanId 0
+}
 
-packer build --only=hyperv-iso -var-file="$multinodeFile" .\multinode-deploy-hyperv.json
-packer build --only=hyperv-iso -var-file="$multinodeFile" .\multinode-compute-hyperv.json
-packer build --only=hyperv-iso -var-file="$multinodeFile" .\multinode-controller-hyperv.json
-packer build --only=hyperv-iso -var-file="$multinodeFile" .\multinode-infrastructure-hyperv.json
-packer build --only=hyperv-iso -var-file="$multinodeFile" .\multinode-network-hyperv.json
-packer build --only=hyperv-iso -var-file="$multinodeFile" .\multinode-storage-hyperv.json
+# Assuming the external switch all the VMs are connected to is called "Main External"
+# This allows promiscuous mode
+Import-Module .\VMSwitchPortMonitorMode.psm1
+Set-VMSwitchPortMonitorMode -SwitchName $mainSwitchName -MonitorMode Source
 
-Import-Packer-VM '.\hyperv\os-deploy\Virtual Machines'
-Import-Packer-VM '.\hyperv\os-compute\Virtual Machines'
-Import-Packer-VM '.\hyperv\os-controller\Virtual Machines'
-Import-Packer-VM '.\hyperv\os-infrastructure\Virtual Machines'
-Import-Packer-VM '.\hyperv\os-network\Virtual Machines'
-Import-Packer-VM '.\hyperv\os-storage\Virtual Machines'
+# Add a second drive to os-storage now
+if (-not (Test-Path $secondHddPath)) {
+    New-VHD -Path $secondHddPath -SizeBytes 100GB -Dynamic
+    Add-VMHardDiskDrive -VMName $storageServer -ControllerType SCSI -Path $secondHddPath
+}
 
-# Turn on nested virtualisation
-Set-VMProcessor -VMName os-deploy -ExposeVirtualizationExtensions $true
-Set-VMProcessor -VMName os-compute -ExposeVirtualizationExtensions $true
-Set-VMProcessor -VMName os-controller -ExposeVirtualizationExtensions $true
-Set-VMProcessor -VMName os-infrastructure -ExposeVirtualizationExtensions $true
-Set-VMProcessor -VMName os-network -ExposeVirtualizationExtensions $true
-Set-VMProcessor -VMName os-storage -ExposeVirtualizationExtensions $true
+
+# I manually added a second hard drive to os-storage
+# Then: sudo fdisk /dev/sdb
+# n for new
+# p for primary partition
+# 1 for first partition
+# enter twice to select default start and end sectors
+# t to change type
+# 8e to select LVM
+# p to confirm setup
+# w to write and exit
+# 
+# pvcreate /dev/sdb1
+# vgcreate cinder-volumes /dev/sdb1

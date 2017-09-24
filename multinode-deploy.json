@@ -13,7 +13,7 @@
       "scripts": [
         "scripts/multinode-deploy.sh",
         "scripts/multinode-common-net.sh",
-        "scripts/openstack-mirror.sh",
+        "scripts/multinode-common.sh",
         "scripts/cleanup.sh"
       ]
     }

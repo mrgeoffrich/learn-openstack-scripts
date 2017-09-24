@@ -65,8 +65,8 @@
         "ram_size": "{{user `ram_size`}}",
         "cpu": "{{user `cpu`}}",
         "iso_urls": [
-          "iso/ubuntu-16.04.2-server-amd64.iso",
-          "http://releases.ubuntu.com/16.04/ubuntu-16.04.2-server-amd64.iso"
+          "{{user `iso_filename`}}",
+          "{{user `iso_url`}}"
         ],
         "iso_checksum_type": "{{ user `iso_checksum_type` }}",
         "iso_checksum": "{{ user `iso_checksum` }}",

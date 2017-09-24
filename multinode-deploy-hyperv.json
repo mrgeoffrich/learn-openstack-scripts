@@ -34,7 +34,7 @@
         "scripts/hyperv.sh",
         "scripts/multinode-deploy.sh",
         "scripts/multinode-common-net-hyperv.sh",
-        "scripts/openstack-mirror.sh",
+        "scripts/multinode-common.sh",
         "scripts/cleanup.sh"
       ]
     }
