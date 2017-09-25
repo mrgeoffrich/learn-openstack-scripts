@@ -28,12 +28,11 @@ when it's run.
 The python script will also validate particular things to make sure the environment is ready
 to have an installation done.
 
-Once the python script is successful, tell the user where to SSH to and what commands to run to begin the
-installation.
+Once the python script is successful, tell the user where to SSH to and what commands to run to begin the installation.
 
-## Remaining steps
+## Remaining steps (currently manual)
 
-### I manually added a second hard drive to os-storage
+### Manually added a second hard drive to os-storage for use with cinder LVM driver
 ```
 sudo fdisk /dev/sdb
 n for new
@@ -43,11 +42,7 @@ enter twice to select default start and end sectors
 t to change type
 8e to select LVM
 p to confirm setup
-w to write and exit
-```
-
-### Then
-```
+w to write and exit fdisk
 pvcreate /dev/sdb1
 vgcreate cinder-volumes /dev/sdb1
 ```
@@ -55,16 +50,27 @@ vgcreate cinder-volumes /dev/sdb1
 ### Setup SSH keys so ansible can access other servers.
 SSH on to os-deploy, sudo su
 
-copy all the os-deploy:/root/.ssh/ contents to all other servers
+copy all the `os-deploy:/root/.ssh/` contents to all other servers
 
+### Configure openstack
+Copy the contents of the `/opt/openstack-ansible/etc/openstack_deploy` directory to the `/etc/openstack_deploy` directory.
 
-Copy the contents of the /opt/openstack-ansible/etc/openstack_deploy directory to the /etc/openstack_deploy directory.
-Upload openstack_user_config.yml to /etc/openstack_deploy
+Upload `openstack_user_config.yml` to `/etc/openstack_deploy`
+
+### Create passwords
+
+```
 cd /opt/openstack-ansible/scripts
 python pw-token-gen.py --file /etc/openstack_deploy/user_secrets.yml
+```
+
+### Run installation
+
+```
 cd /opt/openstack-ansible/playbooks
 openstack-ansible setup-infrastructure.yml --syntax-check # Checks the openstack_user_config.yml is openstack
 openstack-ansible setup-hosts.yml
 openstack-ansible setup-infrastructure.yml
 ansible galera_container -m shell -a "mysql -h localhost -e 'show status like \"%wsrep_cluster_%\";'"
 openstack-ansible setup-openstack.yml
+```
